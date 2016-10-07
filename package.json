@@ -1,7 +1,7 @@
 {
   "name": "kefir-extra",
-  "version": "0.1.0",
-  "description": "",
+  "version": "0.1.0-pre",
+  "description": "A collection of combinators and helpers for the Kefir library",
   "main": "index.js",
   "scripts": {
     "prepublish": "babel src -d lib",

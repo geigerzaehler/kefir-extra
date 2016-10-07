@@ -1,7 +1,9 @@
 Kefir Extra
 ===========
 
-A collection of combinators and helpers for the [Kefir][] library
+[![Build Status](https://travis-ci.org/geigerzaehler/kefir-extra.svg?branch=master)](https://travis-ci.org/geigerzaehler/kefir-extra)
+
+A collection of combinators and helpers for the [Kefir][] library.
 
 ~~~js
 import * as K from 'kefir-extra'
@@ -24,9 +26,14 @@ bus.set('OTHER')
 API
 ---
 
+The `kefir-extra` module exports all functions from the `kefir` module plus the
+following.
+
 **kefir-extra**
-[`createStreamBus()`][#createStreamBus] | [`createPropertyBus()`][#createPropertyBus]
-| [`combinePropertyObject()`][#combinePropertyObject]
+
+[`createStreamBus()`](#createStreamBus)
+| [`createPropertyBus()`](#createPropertyBus)
+| [`combinePropertyObject()`](#combinePropertyObject)
 
 
 ### `createStreamBus()` <a name="createStreamBus">
