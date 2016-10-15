@@ -1,6 +1,7 @@
-let P = require('path')
+/* eslint-disable */
+var P = require('path')
 
-let srcPath = process.env.USE_BUILT ?
+var srcPath = process.env.USE_BUILT ?
   P.resolve('.') :
   P.resolve('./src')
 
