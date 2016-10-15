@@ -79,4 +79,34 @@ describe('kefir-extra', function () {
       assert.calledOnceWith(cb, sinon.match({a: 'A2', b: 'B2'}))
     })
   })
+
+  describe('#onValue()', function () {
+    it('activates and deactivates stream', function () {
+      const s = KM.createStream()
+      assert.ok(!s.isActive())
+
+      const off = K.onValue(s, sinon.spy())
+      assert.ok(s.isActive())
+
+      off()
+      assert.ok(!s.isActive())
+    })
+
+    it('calls handler when event is emitted', function () {
+      const handler = sinon.spy()
+      const s = KM.createStream()
+      K.onValue(s, handler)
+      s.emit('VAL')
+      assert.calledOnceWith(handler, 'VAL')
+    })
+
+    it('does not call handler when unsubcribed', function () {
+      const handler = sinon.spy()
+      const s = KM.createStream()
+      const off = K.onValue(s, handler)
+      off()
+      s.emit('VAL')
+      assert.notCalled(handler)
+    })
+  })
 })

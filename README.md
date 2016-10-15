@@ -34,6 +34,7 @@ following.
 [`createStreamBus()`](#K.createStreamBus)
 | [`createPropertyBus()`](#K.createPropertyBus)
 | [`combinePropertyObject()`](#K.combinePropertyObject)
+| [`onValue()`](#K.onValue)
 
 `import * as KM from 'kefir-extra/mock'`
 
@@ -95,6 +96,23 @@ combined.log()
 ~~~
 
 Note that this function asserts that all values in the argument are properties.
+
+
+### `K.onValue(obs, handler)` <a name="K.onValue">
+
+Add a handler to be called when the observable emits a value.
+
+Returns a function that unsubcribes the handler.
+
+~~~js
+const off = K.onValue(obs, function (val) {
+  console.log(val)
+})
+// Prints values
+off()
+~~~
+
+While the handler is subscribed we throw all errors on the stream.
 
 
 ### `KM.createProperty(initial)` <a name="KM.createProperty">

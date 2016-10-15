@@ -116,6 +116,43 @@ export function createPropertyBus (initialValue) {
 }
 
 
+/**
+ * Add a handler to be called when the observable emits a value.
+ *
+ * Returns a function that unsubcribes the handler.
+ *
+ * ~~~js
+ * const off = K.onValue(obs, function (val) {
+ *   console.log(val)
+ * })
+ * // Prints values
+ * off()
+ * ~~~
+ *
+ *
+ * While the handler is subscribed we throw all errors on the stream.
+ *
+ * @param {K.Observable} obs
+ * @param {function()} handler
+ *
+ * @returns {function()}
+ */
+export function onValue (obs, handler) {
+  obs.onError(throwError)
+  obs.onValue(handler)
+
+  return function off () {
+    obs.offValue(handler)
+    obs.offError(throwError)
+  }
+}
+
+
+function throwError (error) {
+  throw error
+}
+
+
 export function combinePropertyObject (props) {
   const keys = Object.keys(props)
   const values = keys.map((k) => {
