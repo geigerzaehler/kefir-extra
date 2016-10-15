@@ -45,16 +45,16 @@ describe('kefir-extra', function () {
 
   describe('#combinePropertyObject()', function () {
     it('throws an error when one observable is not a property', function () {
-      const a = KM.createMockProperty('A1')
-      const b = KM.createMockStream('B1')
+      const a = KM.createProperty('A1')
+      const b = KM.createStream('B1')
       assert.throws(() => {
         K.combinePropertyObject({a, b})
       }, TypeError)
     })
 
     it('combines the initial state', function () {
-      const a = KM.createMockProperty('A1')
-      const b = KM.createMockProperty('B1')
+      const a = KM.createProperty('A1')
+      const b = KM.createProperty('B1')
       const x = K.combinePropertyObject({a, b})
       assert.propertyValueEqual(x, {a: 'A1', b: 'B1'})
 
@@ -63,8 +63,8 @@ describe('kefir-extra', function () {
     })
 
     it('updates object value when property changes', function () {
-      const a = KM.createMockProperty('A1')
-      const b = KM.createMockProperty('B1')
+      const a = KM.createProperty('A1')
+      const b = KM.createProperty('B1')
       const x = K.combinePropertyObject({a, b})
 
       const cb = sinon.spy()

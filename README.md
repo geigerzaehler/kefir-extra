@@ -29,14 +29,19 @@ API
 The `kefir-extra` module exports all functions from the `kefir` module plus the
 following.
 
-**kefir-extra**
+`import * as K from 'kefir-extra'`
 
-[`createStreamBus()`](#createStreamBus)
-| [`createPropertyBus()`](#createPropertyBus)
-| [`combinePropertyObject()`](#combinePropertyObject)
+[`createStreamBus()`](#K.createStreamBus)
+| [`createPropertyBus()`](#K.createPropertyBus)
+| [`combinePropertyObject()`](#K.combinePropertyObject)
+
+`import * as KM from 'kefir-extra/mock'`
+
+[`createProperty()`](#KM.createProperty)
+| [`createStream()`](#KM.createStream)
 
 
-### `createStreamBus()` <a name="createStreamBus">
+### `K.createStreamBus()` <a name="K.createStreamBus">
 
 Create a bus that allows you to emit values on a stream.
 
@@ -55,7 +60,7 @@ The returned bus object has the following properties
 * `end(): void`
 
 
-### `createPropertyBus(initial)` <a name="createPropertyBus">
+### `K.createPropertyBus(initial)` <a name="K.createPropertyBus">
 
 Create a bus that allows you to set the current value of a property.
 
@@ -75,7 +80,7 @@ The returned bus object has the following properties
 * `end(): void`
 
 
-### `combinePropertyObject(props)` <a name="combinePropertyObject">
+### `K.combinePropertyObject(props)` <a name="K.combinePropertyObject">
 
 Combines an object with properties as values into a property whose current value
 is an object combining the current values.
@@ -90,3 +95,21 @@ combined.log()
 ~~~
 
 Note that this function asserts that all values in the argument are properties.
+
+
+### `KM.createProperty(initial)` <a name="KM.createProperty">
+
+Returns an object that has the same interface as a Kefir property and the
+additional `set(value)` and `end()` methods. These methods can be used to
+control the state of the property.
+
+You should only use this for testing purposes.
+
+
+### `KM.createStream()` <a name="KM.createStream">
+
+Returns an object that has the same interface as a Kefir stream and the
+additional `emit(value)` and `end()` methods. These methods can be used to
+control the state of the stream.
+
+You should only use this for testing purposes.
