@@ -38,12 +38,16 @@ export function createStreamBus () {
 
   const stream = K.stream((emitter) => {
     currentEmitter = emitter
+    return function off () {
+      currentEmitter = null
+    }
   })
 
   return {
     stream: stream,
     end: end,
     emit: emit,
+    isActive: () => !!currentEmitter,
   }
 
   function emit (value) {
@@ -83,12 +87,16 @@ export function createPropertyBus (initialValue) {
 
   const property = K.stream((emitter) => {
     currentEmitter = emitter
+    return function off () {
+      currentEmitter = null
+    }
   }).toProperty(() => currentValue)
 
   return {
     property: property,
     end: end,
     set: set,
+    isActive: () => !!currentEmitter,
   }
 
   function set (value) {
