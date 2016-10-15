@@ -1,14 +1,37 @@
 import * as K from 'kefir'
 export * from 'kefir'
 
+/**
+ * @module kefir-extra
+ * @description
+ * In addition to the modules defined here this module exports all
+ * functions from [`kefir`][kefir].
+ *
+ * [kefir]: https://rpominov.github.io/kefir/
+ */
+
+
+/**
+ * @type StreamBus<T>
+ *
+ * @property {Stream<T>} stream
+ * @method emit(T)
+ * @method end()
+ */
 
 /**
  * Create a bus that allows you to emit values on a stream.
  *
- * The returned bus has the following properties
- * - `stream: Stream<T>`
- * - `emit(T): void`
- * - `end(): void`
+ *  ```js
+ *  const bus = K.createStreamBus()
+ *  bus.stream.log()
+ *  bus.emit('VALUE')
+ *  // <value> 'VALUE'
+ *  bus.end()
+ *  // <end>
+ *  ```
+ *
+ * @returns {StreamBus}
  */
 export function createStreamBus () {
   let currentEmitter
@@ -38,6 +61,12 @@ export function createStreamBus () {
 }
 
 
+/**
+ * @type PropertyBus<T>
+ *
+ * @property {Stream<T>} stream
+ * @method {T -> void} emit
+ */
 /**
  * Create a bus that allows you to imperatively set the value of a
  * property.

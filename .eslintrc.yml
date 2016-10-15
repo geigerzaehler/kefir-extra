@@ -13,7 +13,6 @@ rules:
   no-useless-rename: error
   prefer-rest-params: error
   prefer-spread: error
-  prefer-template: error
   generator-star-spacing: ['error', {before: false, after: true}]
   yield-star-spacing: ['error', {before: false, after: true}]
   require-yield: off
