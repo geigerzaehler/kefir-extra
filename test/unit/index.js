@@ -24,6 +24,23 @@ describe('kefir-extra', function () {
       bus.end()
       assert.calledOnce(cb)
     })
+
+    // TODO duplicates stream bus tests
+    it('signals end when subscribing later', function () {
+      const bus = K.createStreamBus()
+      bus.end()
+      assert.observableHasEnded(bus.stream)
+    })
+
+    // TODO duplicates stream bus tests
+    it('signals end on subscription', function () {
+      const bus = K.createStreamBus()
+      const ended = sinon.spy()
+      bus.stream.onEnd(ended)
+      bus.end()
+      sinon.assert.calledOnce(ended)
+      assert.observableHasEnded(bus.stream)
+    })
   })
 
   describe('#createPropertyBus()', function () {
@@ -40,6 +57,30 @@ describe('kefir-extra', function () {
       const valueReceived = sinon.spy()
       bus.property.onValue(valueReceived)
       sinon.assert.calledWithExactly(valueReceived, 'VAL')
+    })
+
+    // TODO duplicates stream bus tests
+    it('signals end when subscribing later', function () {
+      const bus = K.createPropertyBus()
+      bus.end()
+      assert.observableHasEnded(bus.property)
+    })
+
+    // TODO duplicates stream bus tests
+    it('signals end on subscription', function () {
+      const bus = K.createPropertyBus()
+      const ended = sinon.spy()
+      bus.property.onEnd(ended)
+      bus.end()
+      sinon.assert.calledOnce(ended)
+      assert.observableHasEnded(bus.property)
+    })
+
+    it('gets last value after bus has ended', function () {
+      const bus = K.createPropertyBus()
+      bus.set('JO')
+      bus.end()
+      assert.equal(K.getValue(bus.property), 'JO')
     })
   })
 

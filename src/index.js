@@ -36,8 +36,13 @@ export * from 'kefir'
  */
 export function createStreamBus () {
   let currentEmitter
+  let ended = false
 
   const stream = K.stream((emitter) => {
+    if (ended) {
+      emitter.end()
+      return noop
+    }
     currentEmitter = emitter
     return function off () {
       currentEmitter = null
@@ -58,6 +63,7 @@ export function createStreamBus () {
   }
 
   function end () {
+    ended = true
     if (currentEmitter) {
       currentEmitter.end()
       currentEmitter = null
@@ -84,9 +90,16 @@ export function createStreamBus () {
 export function createPropertyBus (initialValue) {
   let currentEmitter
   let currentValue = initialValue
+  let ended = false
+
+  // free initial value reference
   initialValue = null
 
   const property = K.stream((emitter) => {
+    if (ended) {
+      emitter.end()
+      return noop
+    }
     currentEmitter = emitter
     return function off () {
       currentEmitter = null
@@ -108,10 +121,10 @@ export function createPropertyBus (initialValue) {
   }
 
   function end () {
+    ended = true
     if (currentEmitter) {
       currentEmitter.end()
       currentEmitter = null
-      currentValue = null
     }
   }
 }
@@ -209,3 +222,6 @@ function zipObject (keys, values) {
   keys.forEach((k, i) => res[k] = values[i])
   return res
 }
+
+
+function noop () {}

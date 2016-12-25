@@ -15,3 +15,17 @@ export function propertySemantics (prop) {
   assert.strictEqual(value, K.getValue(prop))
   off()
 }
+
+
+export function observableHasEnded (obs) {
+  let ended = false
+  const subscription = obs.observe({
+    end () {
+      ended = true
+    },
+  })
+  subscription.unsubscribe()
+  if (!ended) {
+    assert.fail(undefined, undefined, 'Observable has not ended yet')
+  }
+}
