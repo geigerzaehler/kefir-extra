@@ -36,6 +36,7 @@ version `v3.6.1` plus the following.
 | [`combinePropertyObject()`](#K.combinePropertyObject)
 | [`onValue()`](#K.onValue)
 | [`getValue()`](#K.getValue)
+| [`promiseProperty()`](#K.promiseProperty)
 
 `import * as KM from 'kefir-extra/mock'`
 
@@ -133,6 +134,30 @@ and then immediately unsubscribe again.
 
 _WARNING:_ Use this sparsely. Using this leads to un-idomatic code.
 
+
+### `K.promiseProperty(promise)` <a name="K.promiseProperty">
+
+_In upcoming release_
+
+Turns a promise into a property that holds a promise state object.
+
+The promise state object has a `state` property that is either `'pending'`,
+`'resolved'`, or `'rejected'`. If the state is “resolved” then the object has a
+`value` property holding the resolved value. If the state is “rejected” the
+object has an `error` property.
+
+~~~js
+K.promiseProperty(promise)
+.onValue((state) => {
+  if (state.state === 'pending') {
+    console.log('pending')
+  } else if (state.state === 'resolved') {
+    console.log('resolved', state.value)
+  } else if (state.state === 'rejected') {
+    console.log('rejected', state.error)
+  }
+})
+~~~
 
 ### `KM.createProperty(initial)` <a name="KM.createProperty">
 

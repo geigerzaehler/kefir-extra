@@ -185,4 +185,43 @@ describe('kefir-extra', function () {
       )
     })
   })
+
+  describe('#promiseProperty()', function () {
+    it('has pending state when promise is pending', function () {
+      const deferred = makeDeferred()
+      const prop = K.promiseProperty(deferred.promise)
+      assert.deepEqual(K.getValue(prop), {state: 'pending'})
+    })
+
+    it('has resolved state when promise is resolved', function () {
+      const deferred = makeDeferred()
+      const prop = K.promiseProperty(deferred.promise)
+      deferred.resolve('X')
+      return deferred.promise.then(() => {
+        assert.deepEqual(K.getValue(prop), {state: 'resolved', value: 'X'})
+        assert.observableHasEnded(prop)
+      })
+    })
+
+    it('has rejected state when promise is rejected', function () {
+      const deferred = makeDeferred()
+      const prop = K.promiseProperty(deferred.promise)
+      deferred.reject('X')
+      return deferred.promise.then(
+        () => { throw new Error('Unexpected resolution') }
+      , () => {
+        assert.deepEqual(K.getValue(prop), {state: 'rejected', error: 'X'})
+        assert.observableHasEnded(prop)
+      })
+    })
+
+    function makeDeferred () {
+      const deferred = {}
+      deferred.promise = new Promise((resolve, reject) => {
+        deferred.resolve = resolve
+        deferred.reject = reject
+      })
+      return deferred
+    }
+  })
 })

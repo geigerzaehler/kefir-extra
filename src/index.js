@@ -206,6 +206,45 @@ export function getValue (prop) {
 }
 
 
+/**
+ * Turns a promise into a property that holds a promise state object.
+ *
+ * The promise state object has a `state` property that is either
+ * `'pending'`, `'resolved'`, or `'rejected'`. If the state is
+ * “resolved” then the object has a `value` property holding the
+ * resolved value. If the state is “rejected” the object has an `error`
+ * property.
+ *
+ * ~~~js
+ * promiseProperty(promise)
+ * .onValue((state) => {
+ *   if (state.state === 'pending') {
+ *     console.log('pending')
+ *   } else if (state.state === 'resolved') {
+ *     console.log('resolved', state.value)
+ *   } else if (state.state === 'rejected') {
+ *     console.log('rejected', state.error)
+ *   }
+ * })
+ * ~~~
+ *
+ * @param {Promise<T>} promise
+ * @returns {PromiseState<T>}
+ */
+export function promiseProperty (promise) {
+  const bus = createPropertyBus({state: 'pending'})
+  promise.then(function (value) {
+    bus.set({state: 'resolved', value: value})
+    bus.end()
+  }, function (error) {
+    bus.set({state: 'rejected', error: error})
+    bus.end()
+  })
+  return bus.property
+
+}
+
+
 function assertIsProperty (prop) {
   if (
     !prop

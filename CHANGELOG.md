@@ -4,6 +4,7 @@ Changelog
 ## Upcoming
 
 * Added `K.getValue()` function.
+* Added `K.promiseProperty()` function.
 * Upgraded to Kefir 3.6.1
 * Fix a bug where a bus would not signal its end when subscribing to
   `bus.stream.onEnd()` _after_ calling `bus.end()`.
