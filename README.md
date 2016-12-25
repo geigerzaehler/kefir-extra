@@ -26,8 +26,8 @@ bus.set('OTHER')
 API
 ---
 
-The `kefir-extra` module exports all functions from the `kefir` module plus the
-following.
+The `kefir-extra` module exports all functions from the `kefir` package at
+version `v3.6.1` plus the following.
 
 `import * as K from 'kefir-extra'`
 
