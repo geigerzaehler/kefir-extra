@@ -1,7 +1,6 @@
 #!/bin/bash
-set -e
-eslint test src
-USE_BUILT=true ./node_modules/.bin/kanu \
+./node_modules/.bin/kanu \
+  --watch \
   --require test/support/boot.js \
   --extensions js \
   test/unit
