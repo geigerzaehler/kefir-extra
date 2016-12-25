@@ -119,7 +119,7 @@ While the handler is subscribed we throw all errors on the stream.
 
 ### `K.getValue(property)` <a name="K.getValue">
 
-_In upcoming release_
+_Since v0.5.1_
 
 Gets the current value of a property and throws an error if the property does
 not have a value.
@@ -137,7 +137,7 @@ _WARNING:_ Use this sparsely. Using this leads to un-idomatic code.
 
 ### `K.promiseProperty(promise)` <a name="K.promiseProperty">
 
-_In upcoming release_
+_Since v0.5.1_
 
 Turns a promise into a property that holds a promise state object.
 
