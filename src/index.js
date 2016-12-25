@@ -241,15 +241,14 @@ export function promiseProperty (promise) {
     bus.end()
   })
   return bus.property
-
 }
 
 
 function assertIsProperty (prop) {
   if (
-    !prop
-    || typeof prop.getType !== 'function'
-    || prop.getType() !== 'property'
+    !prop ||
+    typeof prop.getType !== 'function' ||
+    prop.getType() !== 'property'
   ) {
     throw new TypeError(`Value ${prop} must be a property`)
   }
@@ -258,7 +257,7 @@ function assertIsProperty (prop) {
 
 function zipObject (keys, values) {
   const res = {}
-  keys.forEach((k, i) => res[k] = values[i])
+  keys.forEach((k, i) => { res[k] = values[i] })
   return res
 }
 
