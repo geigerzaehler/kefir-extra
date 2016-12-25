@@ -161,6 +161,7 @@ export function combinePropertyObject (props) {
     return prop
   })
   return K.combine(values, (...values) => zipObject(keys, values))
+    .toProperty()
 }
 
 

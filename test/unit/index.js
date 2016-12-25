@@ -52,6 +52,14 @@ describe('kefir-extra', function () {
       }, TypeError)
     })
 
+    it('has property semantics', function () {
+      const x = K.combinePropertyObject({
+        a: KM.createProperty('A1'),
+        b: KM.createProperty('B1'),
+      })
+      assert.propertySemantics(x)
+    })
+
     it('combines the initial state', function () {
       const a = KM.createProperty('A1')
       const b = KM.createProperty('B1')
