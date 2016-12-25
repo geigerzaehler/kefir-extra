@@ -64,10 +64,10 @@ describe('kefir-extra', function () {
       const a = KM.createProperty('A1')
       const b = KM.createProperty('B1')
       const x = K.combinePropertyObject({a, b})
-      assert.propertyValueEqual(x, {a: 'A1', b: 'B1'})
+      assert.deepEqual(K.getValue(x), {a: 'A1', b: 'B1'})
 
       b.set('B2')
-      assert.propertyValueEqual(x, {a: 'A1', b: 'B2'})
+      assert.deepEqual(K.getValue(x), {a: 'A1', b: 'B2'})
     })
 
     it('updates object value when property changes', function () {
@@ -115,6 +115,33 @@ describe('kefir-extra', function () {
       off()
       s.emit('VAL')
       assert.notCalled(handler)
+    })
+  })
+
+  describe('#getValue()', function () {
+    it('obtains the current value from a property', function () {
+      const p = KM.createProperty('A')
+      assert.equal(K.getValue(p), 'A')
+      p.set('B')
+      assert.equal(K.getValue(p), 'B')
+    })
+
+    it('activates and then deactivates the property', function () {
+      const deactivate = sinon.spy()
+      const activate = sinon.stub().returns(deactivate)
+      const p = K.stream(activate).toProperty(() => null)
+      K.getValue(p)
+      assert.calledOnce(activate)
+      assert.calledOnce(deactivate)
+    })
+
+    it('throws when there is no current value', function () {
+      const p = K.never().toProperty()
+      assert.throws(
+        () => K.getValue(p),
+        Error,
+        'Property does not have current value'
+      )
     })
   })
 })

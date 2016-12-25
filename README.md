@@ -35,6 +35,7 @@ following.
 | [`createPropertyBus()`](#K.createPropertyBus)
 | [`combinePropertyObject()`](#K.combinePropertyObject)
 | [`onValue()`](#K.onValue)
+| [`getValue()`](#K.getValue)
 
 `import * as KM from 'kefir-extra/mock'`
 
@@ -113,6 +114,24 @@ off()
 ~~~
 
 While the handler is subscribed we throw all errors on the stream.
+
+
+### `K.getValue(property)` <a name="K.getValue">
+
+_In upcoming release_
+
+Gets the current value of a property and throws an error if the property does
+not have a value.
+
+~~~js
+const p = K.constant('A')
+K.getValue(p) // => 'A'
+~~~
+
+Calling this function might have side-effects since we subscribe to the property
+and then immediately unsubscribe again.
+
+_WARNING:_ Use this sparsely. Using this leads to un-idomatic code.
 
 
 ### `KM.createProperty(initial)` <a name="KM.createProperty">
