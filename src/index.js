@@ -139,12 +139,13 @@ export function createPropertyBus (initialValue) {
  * @returns {function()}
  */
 export function onValue (obs, handler) {
-  obs.onError(throwError)
-  obs.onValue(handler)
+  const subscription = obs.observe({
+    value: handler,
+    error: throwError,
+  })
 
   return function off () {
-    obs.offValue(handler)
-    obs.offError(throwError)
+    subscription.unsubscribe()
   }
 }
 
