@@ -1,11 +1,11 @@
 Changelog
 =========
 
-## Upcoming
+## v0.5.2 - 2016-12-30
 
 * Added `K.eventSum()` function
 
-## v0.5.1 2016-12-25
+## v0.5.1 - 2016-12-25
 
 * Added `K.getValue()` function.
 * Added `K.promiseProperty()` function.
@@ -14,6 +14,6 @@ Changelog
   `bus.stream.onEnd()` _after_ calling `bus.end()`.
 * `K.combinePropertyObject()` now returns a proper property
 
-## v0.5.0 2016-10-16
+## v0.5.0 - 2016-10-16
 
 Initial release

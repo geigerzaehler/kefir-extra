@@ -103,7 +103,7 @@ Note that this function asserts that all values in the argument are properties.
 
 ### `K.eventSum(events)` <a name="K.eventSum">
 
-_In upcoming release_
+_Since v0.5.2_
 
 Merges events by wrapping values in a `{type, value}` pair.
 
