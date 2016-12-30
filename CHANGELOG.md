@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## Upcoming
+
+* Added `K.eventSum()` function
+
 ## v0.5.1 2016-12-25
 
 * Added `K.getValue()` function.

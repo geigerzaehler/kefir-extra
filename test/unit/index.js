@@ -1,6 +1,6 @@
 import * as K from 'src'
 import * as KM from 'src/mock'
-import {assert, sinon} from 'support'
+import {assert, sinon, collectEvents} from 'support'
 
 describe('kefir-extra', function () {
   describe('#createStreamBus()', function () {
@@ -126,6 +126,29 @@ describe('kefir-extra', function () {
       cb.reset()
       a.set('A2')
       assert.calledOnceWith(cb, sinon.match({a: 'A2', b: 'B2'}))
+    })
+  })
+
+  describe('#eventSum', function () {
+    it('emits wrapped event', function () {
+      const a = KM.createStream()
+      const b = KM.createStream()
+      const c = KM.createStream()
+
+      const sum = K.eventSum({a, b, c})
+      const events = collectEvents(sum)
+
+      assert.deepEqual(events, [])
+      a.emit('a1')
+      b.emit('b2')
+      c.emit('c3')
+      b.emit('b4')
+      assert.deepEqual(events, [
+        {type: 'b', value: 'b4'},
+        {type: 'c', value: 'c3'},
+        {type: 'b', value: 'b2'},
+        {type: 'a', value: 'a1'},
+      ])
     })
   })
 

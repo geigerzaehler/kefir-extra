@@ -34,6 +34,7 @@ version `v3.6.1` plus the following.
 [`createStreamBus()`](#K.createStreamBus)
 | [`createPropertyBus()`](#K.createPropertyBus)
 | [`combinePropertyObject()`](#K.combinePropertyObject)
+| [`eventSum()`](#K.eventSum)
 | [`onValue()`](#K.onValue)
 | [`getValue()`](#K.getValue)
 | [`promiseProperty()`](#K.promiseProperty)
@@ -98,6 +99,24 @@ combined.log()
 ~~~
 
 Note that this function asserts that all values in the argument are properties.
+
+
+### `K.eventSum(events)` <a name="K.eventSum">
+
+_In upcoming release_
+
+Merges events by wrapping values in a `{type, value}` pair.
+
+~~~js
+const sum = K.eventSum({
+  a: K.sequentially(7, ['a1', 'a2'])
+  b: K.sequentially(10, ['b1'])
+})
+sum.log()
+//  7ms { type: 'a', value: 'a1' }
+// 10ms { type: 'b', value: 'b2' }
+// 14ms { type: 'a', value: 'a2' }
+~~~
 
 
 ### `K.onValue(obs, handler)` <a name="K.onValue">

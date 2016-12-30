@@ -180,6 +180,15 @@ export function combinePropertyObject (props) {
 }
 
 
+export function eventSum (events) {
+  const types = Object.keys(events)
+  const streams = types.map((type) => {
+    return events[type].map((value) => ({type, value}))
+  })
+  return K.merge(streams)
+}
+
+
 /**
  * Gets the current value of a property and throws an error if the
  * property does not have a value.
