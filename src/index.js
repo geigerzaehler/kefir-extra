@@ -2,6 +2,7 @@ import {
   createStreamBus,
   createPropertyBus,
 } from './Bus'
+import {assertIsProperty} from './Utils'
 
 /**
  * @module kefir-extra
@@ -86,6 +87,37 @@ export function getValue (prop) {
   }
 
   return value
+}
+
+
+/**
+ * Returns a reference object to the current value of the property.
+ *
+ * ~~~js
+ * const ref = K.getRef(prop)
+ * ref.value // => current value
+ * ref.dispose() // => unsubcribes once and for all
+ * ~~~
+ *
+ * The function subscribes to the property immediately and sets the
+ * `value` property of the reference object.
+ *
+ * The reference object also has a `dispose()` function that
+ * unsubscribes from the property. In addition it cleans up the
+ * reference deleting both the `value` and `dispose` properties.
+ */
+export function getRef (prop) {
+  assertIsProperty(prop)
+  const ref = {dispose}
+
+  const unsub = onValue(prop, (value) => { ref.value = value })
+  return ref
+
+  function dispose () {
+    unsub()
+    delete ref.value
+    delete ref.dispose
+  }
 }
 
 

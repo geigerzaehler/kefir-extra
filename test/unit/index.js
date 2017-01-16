@@ -243,6 +243,32 @@ describe('kefir-extra', function () {
       return deferred
     }
   })
+
+  describe('#getRef()', function () {
+    it('throws when given a stream', function () {
+      assert.throws(() => {
+        K.getRef(KM.createStream())
+      }, TypeError)
+    })
+
+    it('updates ref when value changes', function () {
+      const p = KM.createProperty('A')
+      const ref = K.getRef(p)
+      assert.equal(ref.value, 'A')
+
+      p.set('B')
+      assert.equal(ref.value, 'B')
+    })
+
+    it('unsubscribes when ref is disposed', function () {
+      const p = KM.createProperty('A')
+      const ref = K.getRef(p)
+      ref.dispose()
+      assert.equal(p.isActive(), false)
+      assert.equal('value' in ref, false)
+      assert.equal('dispose' in ref, false)
+    })
+  })
 })
 
 function invertPromise (p) {

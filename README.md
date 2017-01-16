@@ -37,6 +37,7 @@ version `v3.6.1` plus the following.
 | [`eventSum()`](#K.eventSum)
 | [`onValue()`](#K.onValue)
 | [`getValue()`](#K.getValue)
+| [`getRef()`](#K.getRef)
 | [`promiseProperty()`](#K.promiseProperty)
 
 `import * as KM from 'kefir-extra/mock'`
@@ -154,6 +155,26 @@ and then immediately unsubscribe again.
 _WARNING:_ Use this sparsely. Using this leads to un-idomatic code.
 
 
+### `K.getRef(property)` <a name="K.getRef">
+
+_Since v0.5.3_
+
+Returns a reference object to the current value of the property.
+
+~~~js
+const ref = K.getRef(prop)
+ref.value // => current value
+ref.dispose() // => unsubcribes once and for all
+~~~
+
+The function subscribes to the property immediately and sets the `value`
+property of the reference object.
+
+The reference object also has a `dispose()` function that unsubscribes from the
+property. In addition it cleans up the reference deleting both the `value` and
+`dispose` properties.
+
+
 ### `K.promiseProperty(promise)` <a name="K.promiseProperty">
 
 _Since v0.5.1_
@@ -177,6 +198,7 @@ K.promiseProperty(promise)
   }
 })
 ~~~
+
 
 ### `KM.createProperty(initial)` <a name="KM.createProperty">
 
