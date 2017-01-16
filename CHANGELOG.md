@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## v0.5.3 - 2017-01-16
+
+* Added `K.getRef()` function
+* Added `K.sampleFrom()` function
+
 ## v0.5.2 - 2016-12-30
 
 * Added `K.eventSum()` function
