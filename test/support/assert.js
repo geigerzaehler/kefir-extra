@@ -16,6 +16,10 @@ export function propertySemantics (prop) {
   off()
 }
 
+// TODO it should be possible to pass a predicate here
+export function currentValue (prop, value) {
+  assert.strictEqual(K.getValue(prop), value)
+}
 
 export function observableHasEnded (obs) {
   let ended = false

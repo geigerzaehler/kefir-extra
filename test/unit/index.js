@@ -269,6 +269,33 @@ describe('kefir-extra', function () {
       assert.equal('dispose' in ref, false)
     })
   })
+
+  describe('#sampleFrom()', function () {
+    it('samples initial value when subscribing', function () {
+      const trigger = KM.createStream()
+      const sample = sinon.stub()
+      const p = K.sampleFrom(trigger, sample)
+      sample.returns('A')
+      assert.currentValue(p, 'A')
+
+      sample.returns('B')
+      assert.currentValue(p, 'B')
+    })
+
+    it('updates property when trigger emits a value', function () {
+      const trigger = KM.createStream()
+      const sample = sinon.stub()
+      sample.returns('A')
+
+      const p = K.sampleFrom(trigger, sample)
+      const ref = K.getRef(p)
+
+      sample.returns('B')
+      assert.equal(ref.value, 'A')
+      trigger.emit()
+      assert.equal(ref.value, 'B')
+    })
+  })
 })
 
 function invertPromise (p) {

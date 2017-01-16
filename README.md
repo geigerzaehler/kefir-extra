@@ -39,6 +39,7 @@ version `v3.6.1` plus the following.
 | [`getValue()`](#K.getValue)
 | [`getRef()`](#K.getRef)
 | [`promiseProperty()`](#K.promiseProperty)
+| [`sampleFrom()`](#K.sampleFrom)
 
 `import * as KM from 'kefir-extra/mock'`
 
@@ -196,6 +197,23 @@ K.promiseProperty(promise)
   } else if (state.state === 'rejected') {
     console.log('rejected', state.error)
   }
+})
+~~~
+
+
+### `K.sampleFrom(obs, sampler)` <a name="K.sampleFrom">
+
+_Since v0.5.3_
+
+Create a property that is updated whenever the observable emits a new event. The
+sampler function is used to obtain the value.
+
+~~~js
+const prop = K.sampleFrom(obs, () => {
+  // called on initial subscription and whenever obs emits a new event
+
+  // Return the current property value
+  return value
 })
 ~~~
 

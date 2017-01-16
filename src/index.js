@@ -157,3 +157,19 @@ export function promiseProperty (promise) {
   })
   return bus.property
 }
+
+
+/**
+ * Create a property that is updated whenever the observable emits a
+ * new event. The sampler function is used to obtain the value.
+ *
+ * @param {Observable<any>} obs
+ * @param {function} sampler
+ * @returns {Property<any>}
+ */
+export function sampleFrom (obs, sampler) {
+  // We need to pass `noop` to get an initial, undefined value.
+  return obs.toProperty(noop).map(sampler)
+}
+
+function noop () {}
