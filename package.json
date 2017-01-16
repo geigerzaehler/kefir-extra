@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "kanu": "^0.0.1",
-    "kefir": "^3.5.2"
+    "kefir": "^3.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
