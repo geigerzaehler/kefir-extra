@@ -1,6 +1,7 @@
-import * as K from 'kefir'
-
-export * from 'kefir'
+import {
+  createStreamBus,
+  createPropertyBus,
+} from './Bus'
 
 /**
  * @module kefir-extra
@@ -11,123 +12,17 @@ export * from 'kefir'
  * [kefir]: https://rpominov.github.io/kefir/
  */
 
+export * from 'kefir'
 
-/**
- * @type StreamBus<T>
- *
- * @property {Stream<T>} stream
- * @method emit(T)
- * @method end()
- */
-
-/**
- * Create a bus that allows you to emit values on a stream.
- *
- *  ```js
- *  const bus = K.createStreamBus()
- *  bus.stream.log()
- *  bus.emit('VALUE')
- *  // <value> 'VALUE'
- *  bus.end()
- *  // <end>
- *  ```
- *
- * @returns {StreamBus}
- */
-export function createStreamBus () {
-  let currentEmitter
-  let ended = false
-
-  const stream = K.stream((emitter) => {
-    if (ended) {
-      emitter.end()
-      return noop
-    }
-    currentEmitter = emitter
-    return function off () {
-      currentEmitter = null
-    }
-  })
-
-  return {
-    stream: stream,
-    end: end,
-    emit: emit,
-    isActive: () => !!currentEmitter,
-  }
-
-  function emit (value) {
-    if (currentEmitter) {
-      currentEmitter.emit(value)
-    }
-  }
-
-  function end () {
-    ended = true
-    if (currentEmitter) {
-      currentEmitter.end()
-      currentEmitter = null
-    }
-  }
+export {
+  createStreamBus,
+  createPropertyBus,
 }
 
-
-/**
- * @type PropertyBus<T>
- *
- * @property {Stream<T>} stream
- * @method {T -> void} emit
- */
-/**
- * Create a bus that allows you to imperatively set the value of a
- * property.
- *
- * The returned bus has the following properties
- * - `property: Property<T>`
- * - `set(T): void`
- * - `end(): void`
- */
-export function createPropertyBus (initialValue) {
-  let currentEmitter
-  let currentValue = initialValue
-  let ended = false
-
-  // free initial value reference
-  initialValue = null
-
-  const property = K.stream((emitter) => {
-    if (ended) {
-      emitter.end()
-      return noop
-    }
-    currentEmitter = emitter
-    return function off () {
-      currentEmitter = null
-    }
-  }).toProperty(() => currentValue)
-
-  return {
-    property: property,
-    end: end,
-    set: set,
-    isActive: () => !!currentEmitter,
-  }
-
-  function set (value) {
-    currentValue = value
-    if (currentEmitter) {
-      currentEmitter.emit(value)
-    }
-  }
-
-  function end () {
-    ended = true
-    if (currentEmitter) {
-      currentEmitter.end()
-      currentEmitter = null
-    }
-  }
-}
+export {
+  combinePropertyObject,
+  eventSum,
+} from './Combinators'
 
 
 /**
@@ -165,27 +60,6 @@ export function onValue (obs, handler) {
 
 function throwError (error) {
   throw error
-}
-
-
-export function combinePropertyObject (props) {
-  const keys = Object.keys(props)
-  const values = keys.map((k) => {
-    const prop = props[k]
-    assertIsProperty(prop)
-    return prop
-  })
-  return K.combine(values, (...values) => zipObject(keys, values))
-    .toProperty()
-}
-
-
-export function eventSum (events) {
-  const types = Object.keys(events)
-  const streams = types.map((type) => {
-    return events[type].map((value) => ({type, value}))
-  })
-  return K.merge(streams)
 }
 
 
@@ -251,24 +125,3 @@ export function promiseProperty (promise) {
   })
   return bus.property
 }
-
-
-function assertIsProperty (prop) {
-  if (
-    !prop ||
-    typeof prop.getType !== 'function' ||
-    prop.getType() !== 'property'
-  ) {
-    throw new TypeError(`Value ${prop} must be a property`)
-  }
-}
-
-
-function zipObject (keys, values) {
-  const res = {}
-  keys.forEach((k, i) => { res[k] = values[i] })
-  return res
-}
-
-
-function noop () {}
