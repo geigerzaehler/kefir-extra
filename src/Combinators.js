@@ -16,7 +16,7 @@ export function combinePropertyObject (props) {
 export function eventSum (events) {
   const types = Object.keys(events)
   const streams = types.map((type) => {
-    return events[type].map((value) => ({type, value}))
+    return events[type].map((value) => ({ type, value }))
   })
   return K.merge(streams)
 }

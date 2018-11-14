@@ -1,4 +1,4 @@
-import {assertIsProperty} from './Utils'
+import { assertIsProperty } from './Utils'
 
 
 /**
@@ -83,7 +83,7 @@ export function getValue (prop) {
  */
 export function getRef (prop) {
   assertIsProperty(prop)
-  const ref = {dispose}
+  const ref = { dispose }
 
   const unsub = onValue(prop, (value) => { ref.value = value })
   return ref

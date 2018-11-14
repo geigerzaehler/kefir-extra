@@ -1,6 +1,6 @@
 import * as K from 'src'
 import * as KM from 'src/mock'
-import {assert, sinon, collectEvents} from 'support'
+import { assert, sinon, collectEvents } from 'support'
 
 describe('kefir-extra', function () {
   describe('#createStreamBus()', function () {
@@ -12,7 +12,7 @@ describe('kefir-extra', function () {
       bus.emit('VAL')
       assert.calledOnceWith(valueReceived, 'VAL')
 
-      valueReceived.reset()
+      valueReceived.resetHistory()
       bus.emit(2)
       assert.calledOnceWith(valueReceived, 2)
     })
@@ -89,7 +89,7 @@ describe('kefir-extra', function () {
       const a = KM.createProperty('A1')
       const b = KM.createStream('B1')
       assert.throws(() => {
-        K.combinePropertyObject({a, b})
+        K.combinePropertyObject({ a, b })
       }, TypeError)
     })
 
@@ -104,28 +104,28 @@ describe('kefir-extra', function () {
     it('combines the initial state', function () {
       const a = KM.createProperty('A1')
       const b = KM.createProperty('B1')
-      const x = K.combinePropertyObject({a, b})
-      assert.deepEqual(K.getValue(x), {a: 'A1', b: 'B1'})
+      const x = K.combinePropertyObject({ a, b })
+      assert.deepEqual(K.getValue(x), { a: 'A1', b: 'B1' })
 
       b.set('B2')
-      assert.deepEqual(K.getValue(x), {a: 'A1', b: 'B2'})
+      assert.deepEqual(K.getValue(x), { a: 'A1', b: 'B2' })
     })
 
     it('updates object value when property changes', function () {
       const a = KM.createProperty('A1')
       const b = KM.createProperty('B1')
-      const x = K.combinePropertyObject({a, b})
+      const x = K.combinePropertyObject({ a, b })
 
       const cb = sinon.spy()
       x.onValue(cb)
 
-      cb.reset()
+      cb.resetHistory()
       b.set('B2')
-      assert.calledOnceWith(cb, sinon.match({a: 'A1', b: 'B2'}))
+      assert.calledOnceWith(cb, sinon.match({ a: 'A1', b: 'B2' }))
 
-      cb.reset()
+      cb.resetHistory()
       a.set('A2')
-      assert.calledOnceWith(cb, sinon.match({a: 'A2', b: 'B2'}))
+      assert.calledOnceWith(cb, sinon.match({ a: 'A2', b: 'B2' }))
     })
   })
 
@@ -135,7 +135,7 @@ describe('kefir-extra', function () {
       const b = KM.createStream()
       const c = KM.createStream()
 
-      const sum = K.eventSum({a, b, c})
+      const sum = K.eventSum({ a, b, c })
       const events = collectEvents(sum)
 
       assert.deepEqual(events, [])
@@ -144,10 +144,10 @@ describe('kefir-extra', function () {
       c.emit('c3')
       b.emit('b4')
       assert.deepEqual(events, [
-        {type: 'b', value: 'b4'},
-        {type: 'c', value: 'c3'},
-        {type: 'b', value: 'b2'},
-        {type: 'a', value: 'a1'},
+        { type: 'b', value: 'b4' },
+        { type: 'c', value: 'c3' },
+        { type: 'b', value: 'b2' },
+        { type: 'a', value: 'a1' },
       ])
     })
   })
@@ -213,7 +213,7 @@ describe('kefir-extra', function () {
     it('has pending state when promise is pending', function () {
       const deferred = makeDeferred()
       const prop = K.promiseProperty(deferred.promise)
-      assert.deepEqual(K.getValue(prop), {state: 'pending'})
+      assert.deepEqual(K.getValue(prop), { state: 'pending' })
     })
 
     it('has resolved state when promise is resolved', function* () {
@@ -221,7 +221,7 @@ describe('kefir-extra', function () {
       const prop = K.promiseProperty(deferred.promise)
       deferred.resolve('X')
       yield deferred.promise
-      assert.deepEqual(K.getValue(prop), {state: 'resolved', value: 'X'})
+      assert.deepEqual(K.getValue(prop), { state: 'resolved', value: 'X' })
       assert.observableHasEnded(prop)
     })
 
@@ -230,7 +230,7 @@ describe('kefir-extra', function () {
       const prop = K.promiseProperty(deferred.promise)
       deferred.reject('X')
       yield invertPromise(deferred.promise)
-      assert.deepEqual(K.getValue(prop), {state: 'rejected', error: 'X'})
+      assert.deepEqual(K.getValue(prop), { state: 'rejected', error: 'X' })
       assert.observableHasEnded(prop)
     })
 

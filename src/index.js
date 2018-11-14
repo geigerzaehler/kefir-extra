@@ -58,12 +58,12 @@ export {
  * @returns {PromiseState<T>}
  */
 export function promiseProperty (promise) {
-  const bus = createPropertyBus({state: 'pending'})
+  const bus = createPropertyBus({ state: 'pending' })
   promise.then(function (value) {
-    bus.set({state: 'resolved', value: value})
+    bus.set({ state: 'resolved', value: value })
     bus.end()
   }, function (error) {
-    bus.set({state: 'rejected', error: error})
+    bus.set({ state: 'rejected', error: error })
     bus.end()
   })
   return bus.property
