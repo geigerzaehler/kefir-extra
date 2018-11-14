@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## Upcoming
+
+* Upgrade `kefir` from v3.7.0 to v3.8.5
+
 ## v0.5.3 - 2017-01-16
 
 * Added `K.getRef()` function

@@ -1879,11 +1879,12 @@ kanu@^0.0.1:
     sum-types "^0.9.2"
     yargs "^6.1.1"
 
-kefir@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/kefir/-/kefir-3.7.0.tgz#68686fc3532764395db2ade63dec1ee16aadcb1c"
+kefir@^3.8.5:
+  version "3.8.5"
+  resolved "https://registry.yarnpkg.com/kefir/-/kefir-3.8.5.tgz#ce8d952707ea833d9d995a96b92daa744dea83ba"
+  integrity sha512-u4UxHyIvdOOM62Y/yAtYPeYEg/yUfwl5/QF3ksrTRxEdhpa7LAFChntZxVqbcf0gCGblZzL/JnV/gZYWOps3Qw==
   dependencies:
-    symbol-observable "^1.0.1"
+    symbol-observable "1.0.4"
 
 kind-of@^3.0.2:
   version "3.1.0"
@@ -2874,9 +2875,10 @@ supports-color@^5.3.0, supports-color@^5.5.0:
   dependencies:
     has-flag "^3.0.0"
 
-symbol-observable@^1.0.1:
+symbol-observable@1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
+  integrity sha1-Kb9hXUqnEhvdiYsi1LP5vE4qoD0=
 
 table@^5.0.2:
   version "5.1.0"
