@@ -300,7 +300,7 @@ describe('kefir-extra', function () {
 
 function invertPromise (p) {
   return p.then(
-    () => { throw new Error('Unexptedly resolved promise') },
+    () => { throw new Error('Unexpectedly resolved promise') },
     (e) => e
   )
 }
