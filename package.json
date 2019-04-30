@@ -34,6 +34,7 @@
     ]
   },
   "dependencies": {
+    "@types/kefir": "^3.8.1",
     "kefir": "^3.8.6"
   },
   "devDependencies": {
@@ -48,6 +49,9 @@
     "eslint-plugin-promise": "~4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "kanu": "^0.0.1",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "tslint": "^5.16.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.4.5"
   }
 }

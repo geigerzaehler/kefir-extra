@@ -1,16 +1,23 @@
 import * as K from 'kefir'
 
-export function createStreamBus () {
-  let currentEmitter
+export interface StreamBus<A, E> {
+  stream: K.Stream<A, E>
+  end (): void
+  emit (a: A): void
+  isActive (): boolean
+}
+
+export function createStreamBus<A, E> (): StreamBus<A, E> {
+  let currentEmitter: K.Emitter<A, E> | null = null
   let ended = false
 
-  const stream = K.stream((emitter) => {
+  const stream = K.stream<A, E>((emitter) => {
     if (ended) {
       emitter.end()
       return noop
     }
     currentEmitter = emitter
-    return function off () {
+    return function off (): void {
       currentEmitter = null
     }
   })
@@ -22,13 +29,13 @@ export function createStreamBus () {
     isActive: () => !!currentEmitter,
   }
 
-  function emit (value) {
+  function emit (value: A): void {
     if (currentEmitter) {
       currentEmitter.emit(value)
     }
   }
 
-  function end () {
+  function end (): void {
     ended = true
     if (currentEmitter) {
       currentEmitter.end()
@@ -37,37 +44,28 @@ export function createStreamBus () {
   }
 }
 
+export interface PropertyBus<A, E> {
+  property: K.Property<A, E>
+  end (): void
+  set (a: A): void
+  isActive (): boolean
+}
 
-/**
- * @type PropertyBus<T>
- *
- * @property {Stream<T>} stream
- * @method {T -> void} emit
- */
-/**
- * Create a bus that allows you to imperatively set the value of a
- * property.
- *
- * The returned bus has the following properties
- * - `property: Property<T>`
- * - `set(T): void`
- * - `end(): void`
- */
-export function createPropertyBus (initialValue) {
-  let currentEmitter
-  let currentValue = initialValue
+export function createPropertyBus<A, E> (initialValue: A): PropertyBus<A, E> {
+  let currentEmitter: K.Emitter<A, E> | null = null
+  let currentValue: A = initialValue
   let ended = false
 
   // free initial value reference
-  initialValue = null
+  initialValue = null as any
 
-  const property = K.stream((emitter) => {
+  const property = K.stream<A, E>((emitter) => {
     if (ended) {
       emitter.end()
       return noop
     }
     currentEmitter = emitter
-    return function off () {
+    return function off (): void {
       currentEmitter = null
     }
   }).toProperty(() => currentValue)
@@ -79,14 +77,14 @@ export function createPropertyBus (initialValue) {
     isActive: () => !!currentEmitter,
   }
 
-  function set (value) {
+  function set (value: A): void {
     currentValue = value
     if (currentEmitter) {
       currentEmitter.emit(value)
     }
   }
 
-  function end () {
+  function end (): void {
     ended = true
     if (currentEmitter) {
       currentEmitter.end()
@@ -95,4 +93,6 @@ export function createPropertyBus (initialValue) {
   }
 }
 
-function noop () {}
+function noop (): void {
+  // tslint:disable-next-line no-empty
+}
