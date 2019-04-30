@@ -34,8 +34,7 @@
     ]
   },
   "dependencies": {
-    "kanu": "^0.0.1",
-    "kefir": "^3.8.5"
+    "kefir": "^3.8.6"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -48,6 +47,7 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "~4.1.1",
     "eslint-plugin-standard": "^4.0.0",
+    "kanu": "^0.0.1",
     "sinon": "^7.3.2"
   }
 }
