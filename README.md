@@ -27,7 +27,7 @@ API
 ---
 
 The `kefir-extra` module exports all functions from the `kefir` package at
-version `v3.6.1` plus the following.
+version `v3.8.6` plus the following.
 
 `import * as K from 'kefir-extra'`
 
